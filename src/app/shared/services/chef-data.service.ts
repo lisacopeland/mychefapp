@@ -156,7 +156,6 @@ export class ChefDataService {
     const apiUrl = 'localhost:2133/nodes';
 
     console.log('params will be ' + JSON.stringify(filterValues));
-
     const params = new HttpParams().set('filters', JSON.stringify(filterValues));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -171,8 +170,7 @@ export class ChefDataService {
           console.log('from HTTP call');
           console.log(JSON.stringify(data));
           this.nodeData = data.Nodes;
-          // return data;
-          return this.SampleUnfilteredNodes;
+          return data;
         }),
         catchError(this.handleError)
       );

@@ -31,9 +31,9 @@
   </div>
 
   <mat-card class="data-card" fxLayout="column" fxLayoutAlign="space-between">
-<!--     <div *ngIf="!hasData" fxLayout="row" fxLayoutAlign="center center">There is no data to display</div>
- -->
-    <table mat-table [dataSource]="dataSource">
+    <div *ngIf="!hasData" fxLayout="row" fxLayoutAlign="center center">There is no data to display</div>
+
+    <table *ngIf="hasData" mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>

@@ -3,7 +3,6 @@ import { ChefDataService } from '@shared/services/chef-data.service';
 import { NodeInterface, KvInterface } from '@shared/interfaces/chef-data.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { environment } from '@environments/environment';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -43,7 +42,6 @@ export class DataTableComponent implements OnInit {
         filterText: ''
       });
     });
-    // this.getTableData();
     this.getTableData();
   }
 
@@ -70,7 +68,7 @@ export class DataTableComponent implements OnInit {
 
   getTableData() {
 
-    const data = this.chefDataService.getTestData(this.filterValues);
+/*     const data = this.chefDataService.getTestData(this.filterValues);
     if (data && data.Nodes.length) {
       this.dataSource = new MatTableDataSource<NodeInterface>(data.Nodes);
       this.dataSource.paginator = this.paginator;
@@ -78,8 +76,8 @@ export class DataTableComponent implements OnInit {
       this.hasData = true;
     } else {
       this.hasData = false;
-    }
-/*     this.chefDataService.getData(this.filterValues)
+    } */
+    this.chefDataService.getData(this.filterValues)
       .subscribe(data => {
         if (data && data.Nodes.length) {
           this.dataSource = new MatTableDataSource<NodeInterface>(data.Nodes);
@@ -93,7 +91,7 @@ export class DataTableComponent implements OnInit {
         if (!environment.production) {
           console.log('Error getting Node Data');
         }
-      }); */
+      });
   }
 
 }
