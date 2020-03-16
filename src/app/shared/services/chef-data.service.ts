@@ -10,7 +10,7 @@ import { throwError, Observable } from 'rxjs';
 })
 export class ChefDataService {
 
-  SampleUnfilteredNodes: NodesResponseInterface = {
+/*   SampleUnfilteredNodes: NodesResponseInterface = {
     Nodes: [
       {
         ID: 'e69dc612-7e67-43f2-9b19-256afd385820',
@@ -143,28 +143,35 @@ export class ChefDataService {
       }
     ],
     Total: 6
-  };
+  }; */
 
   constructor(private http: HttpClient) { }
   nodeData: NodeInterface[];
 
+/*
   getTestData(filterValues: KvInterface[]) {
     return this.SampleUnfilteredNodes;
-  }
+  } */
 
   getData(filterValues: KvInterface[]): Observable<NodesResponseInterface> {
-    const apiUrl = 'localhost:2133/nodes';
+    const apiUrl = 'http://localhost:2133/nodes';
 
     console.log('params will be ' + JSON.stringify(filterValues));
-    const params = new HttpParams().set('filters', JSON.stringify(filterValues));
+    // const params = new HttpParams().set('Filters', JSON.stringify(filterValues));
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/plain'
-      }),
-      params
+      })
+      // params
     };
+
+    const paramBody = {
+      Filters: filterValues
+    };
+
+    const body = JSON.stringify(paramBody);
     return this.http
-      .get<NodesResponseInterface>(apiUrl, httpOptions)
+      .post<NodesResponseInterface>(apiUrl, body, httpOptions)
       .pipe(
         map(data => {
           console.log('from HTTP call');
