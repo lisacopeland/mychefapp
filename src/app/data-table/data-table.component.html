@@ -10,7 +10,7 @@
       <mat-form-field>
         <mat-label>Filter Type</mat-label>
         <mat-select formControlName="filterSelect">
-          <mat-option *ngFor="let filterType of filterTypes" [value]="filterType.filterText">
+          <mat-option *ngFor="let filterType of currentFilterTypes" [value]="filterType.filterText">
             {{filterType.label}}
           </mat-option>
         </mat-select>

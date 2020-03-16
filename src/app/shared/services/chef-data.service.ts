@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NodesResponseInterface, NodeInterface, KvInterface } from '@interfaces/chef-data.interface';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
@@ -146,29 +146,25 @@ export class ChefDataService {
   }; */
 
   constructor(private http: HttpClient) { }
-  nodeData: NodeInterface[];
 
-/*
-  getTestData(filterValues: KvInterface[]) {
-    return this.SampleUnfilteredNodes;
-  } */
-
+  // Do an HTTP Post to get the data. Use a POST instead of a GET because
+  // the API gets the parameters from the body of the post
   getData(filterValues: KvInterface[]): Observable<NodesResponseInterface> {
+    // I had 'localhost:2133/nodes and I was getting a CORS error, added
+    // the 'http://' and it worked
     const apiUrl = 'http://localhost:2133/nodes';
-
     console.log('params will be ' + JSON.stringify(filterValues));
-    // const params = new HttpParams().set('Filters', JSON.stringify(filterValues));
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/plain'
       })
-      // params
     };
 
     const paramBody = {
       Filters: filterValues
     };
 
+    // Cast the post to the expected return type
     const body = JSON.stringify(paramBody);
     return this.http
       .post<NodesResponseInterface>(apiUrl, body, httpOptions)
@@ -176,13 +172,13 @@ export class ChefDataService {
         map(data => {
           console.log('from HTTP call');
           console.log(JSON.stringify(data));
-          this.nodeData = data.Nodes;
           return data;
         }),
         catchError(this.handleError)
       );
   }
 
+  // General purpose error handler for HTTP calls
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

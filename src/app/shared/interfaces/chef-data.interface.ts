@@ -22,6 +22,7 @@ export interface PlatformInterface {
   Name: string;
   Release: string;
 }
+
 export interface LastRunInterface {
   Time: Date;
   Status: 'passed' | 'failed' | 'skipped';
